@@ -853,3 +853,81 @@
     clip-path: inset(0 0 0 100%);
   }
 }
+
+/* ------------------------------------------------------------------------
+   Figures ("Cifre", "Pe scurt"): panels matching the principles grid, with an
+   orange meter that fills while the number counts up (same 1.8 s, ease-out).
+   ------------------------------------------------------------------------ */
+.stat {
+  transition:
+    background-color 500ms var(--ease-out-quint),
+    color 500ms var(--ease-out-quint);
+}
+
+.stat-tag {
+  color: var(--color-ink);
+  transition: color 500ms var(--ease-out-quint);
+}
+
+.stat-index,
+.stat-label {
+  color: var(--color-graphite);
+  transition: color 500ms var(--ease-out-quint);
+}
+
+.stat-index {
+  color: var(--color-ash);
+}
+
+.stat-suffix {
+  color: var(--color-signal);
+}
+
+.stat-meter {
+  background: var(--color-line);
+  transition: background-color 500ms var(--ease-out-quint);
+}
+
+.stat-meter-fill {
+  background: var(--color-signal);
+  transform-origin: left center;
+}
+
+@media (hover: hover) {
+  .stat:hover {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .stat:hover .stat-tag {
+    color: var(--color-paper);
+  }
+
+  .stat:hover .stat-label {
+    color: var(--color-ash);
+  }
+
+  .stat:hover .stat-meter {
+    background: var(--color-line-dark);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .stat[data-reveal] {
+    transition:
+      opacity var(--dur-reveal) var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms),
+      transform var(--dur-reveal) var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms),
+      background-color 500ms var(--ease-out-quint),
+      color 500ms var(--ease-out-quint);
+  }
+
+  .js .stat[data-reveal] .stat-meter-fill {
+    transform: scaleX(0);
+  }
+
+  /* Starts with the count (reveal delay + 150 ms) and lasts as long (1.8 s). */
+  .js .stat[data-revealed] .stat-meter-fill {
+    transform: none;
+    transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1) calc(var(--reveal-delay, 0) * 1ms + 150ms);
+  }
+}

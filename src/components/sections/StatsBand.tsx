@@ -1,9 +1,10 @@
 import { stats } from "@/content/agency";
 
 /**
- * "60K+ €" -> number 60 counted up from 0, suffix "K+ €" kept as is. The server
- * renders the final value, so crawlers, no-JS and reduced-motion visitors always
- * get the real figure; RevealScript counts the number up when the block appears.
+ * "60K+ €" -> number 60 counted up from 0, suffix "K+ €" set in signal orange.
+ * The server renders the final value, so crawlers, no-JS and reduced-motion
+ * visitors always get the real figure; RevealScript counts the number up when the
+ * panel appears.
  */
 function CountUp({ value }: { value: string }) {
   const match = value.match(/^(\d+)(.*)$/);
@@ -13,32 +14,47 @@ function CountUp({ value }: { value: string }) {
       <span data-count={match[1]} suppressHydrationWarning>
         {match[1]}
       </span>
-      {match[2]}
+      <span className="stat-suffix">{match[2]}</span>
     </>
   );
 }
 
-/** The three verified figures from the original site, set as large numerals between hairlines. */
-export function StatsBand({ tone = "light" }: { tone?: "light" | "dark" }) {
-  const line = tone === "dark" ? "border-line-dark" : "border-line";
-  const muted = tone === "dark" ? "text-ash" : "text-graphite";
+/**
+ * The three verified figures as panels on the same hairline grid as the
+ * "De ce să ne alegi" principles: discipline label on top, large counting numeral,
+ * an orange meter that fills in step with the count, then the description.
+ * On hover a panel turns ink, like the principles.
+ */
+export function StatsBand() {
+  const total = String(stats.length).padStart(2, "0");
   return (
-    <dl className={`grid border-t ${line} md:grid-cols-3`}>
+    <ul className="grid border-l border-t border-line md:grid-cols-3">
       {stats.map((stat, index) => (
-        <div
+        <li
           key={stat.label}
-          className={`flex flex-col justify-between gap-4 border-b ${line} py-8 md:border-b-0 md:gap-10 md:py-10 md:pr-8 ${
-            index > 0 ? `md:border-l md:pl-8` : ""
-          }`}
-          suppressHydrationWarning data-reveal
-          style={{ "--reveal-delay": index * 90 } as React.CSSProperties}
+          className="stat group flex flex-col border-b border-r border-line bg-paper p-7 pb-9 md:min-h-[24rem] md:p-9 lg:p-10"
+          suppressHydrationWarning
+          data-reveal
+          style={{ "--reveal-delay": index * 120 } as React.CSSProperties}
         >
-          <dt className={`order-2 max-w-[16rem] ${muted}`}>{stat.label}</dt>
-          <dd className="type-number order-1 whitespace-nowrap" aria-label={stat.value}>
+          <p className="type-label flex items-center justify-between gap-4" aria-hidden="true">
+            <span className="stat-tag flex items-center gap-2.5">
+              <span className="h-2 w-2 bg-signal" />
+              {stat.tag}
+            </span>
+            <span className="stat-index">
+              {String(index + 1).padStart(2, "0")} / {total}
+            </span>
+          </p>
+          <p className="stat-number type-number mt-12 whitespace-nowrap md:mt-auto md:pt-16" aria-label={stat.value}>
             <CountUp value={stat.value} />
-          </dd>
-        </div>
+          </p>
+          <span aria-hidden="true" className="stat-meter mt-8 block h-px w-full">
+            <span className="stat-meter-fill block h-full w-full" />
+          </span>
+          <p className="stat-label mt-6 max-w-[17rem]">{stat.label}</p>
+        </li>
       ))}
-    </dl>
+    </ul>
   );
 }
