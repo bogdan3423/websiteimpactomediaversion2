@@ -200,20 +200,29 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-[var(--section-tight)] grid border-t border-ink md:grid-cols-2">
+        <div className="mt-[var(--section-tight)] grid border-l border-t border-line md:grid-cols-2">
           {webService.offers.map((offer, index) => (
             <article
               key={offer.title}
-              className={`py-10 ${index > 0 ? "border-t border-line md:border-l md:border-t-0 md:pl-10" : "md:pr-10"}`}
+              className="offer border-b border-r border-line p-7 pb-9 md:p-10"
               suppressHydrationWarning data-reveal
-              style={{ "--reveal-delay": index * 100 } as React.CSSProperties}
+              style={{ "--reveal-delay": index * 120 } as React.CSSProperties}
             >
-              <h3 className="type-h2">{keepHyphenated(offer.title)}</h3>
+              <p className="type-label flex items-center justify-between gap-4" aria-hidden="true">
+                <span className="flex items-center gap-2.5 text-ink">
+                  <span className="h-2 w-2 bg-signal" />
+                  {index === 0 ? "Prezentare" : "E-commerce"}
+                </span>
+                <span className="text-ash">
+                  {String(index + 1).padStart(2, "0")} / {String(webService.offers.length).padStart(2, "0")}
+                </span>
+              </p>
+              <h3 className="type-h2 mt-12 md:mt-16">{keepHyphenated(offer.title)}</h3>
               <p className="mt-5 max-w-md text-graphite">{offer.text}</p>
               <ul className="mt-8 space-y-3">
                 {offer.items.map((item) => (
                   <li key={item} className="flex items-center gap-4">
-                    <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 bg-ink" />
+                    <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 bg-signal" />
                     {item}
                   </li>
                 ))}

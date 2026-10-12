@@ -931,3 +931,107 @@
     transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1) calc(var(--reveal-delay, 0) * 1ms + 150ms);
   }
 }
+
+/* ------------------------------------------------------------------------
+   Numbered steps (Servicii, Despre noi): calmer version of the principles.
+   ------------------------------------------------------------------------ */
+.numbered {
+  background: var(--color-paper);
+  transition: background-color 500ms var(--ease-out-quint);
+}
+
+[data-tone="dark"] .numbered {
+  background: var(--color-ink);
+}
+
+.numbered-number {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 118;
+  font-weight: 500;
+  font-size: clamp(2.4rem, 1.7rem + 1.8vw, 3.6rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-feature-settings: "tnum" 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-ink);
+  transition: color 500ms var(--ease-out-quint), -webkit-text-stroke-color 500ms var(--ease-out-quint);
+}
+
+[data-tone="dark"] .numbered-number {
+  -webkit-text-stroke-color: var(--color-paper);
+}
+
+.numbered-number::after {
+  content: attr(data-n);
+  position: absolute;
+  inset: 0;
+  color: var(--color-signal);
+  -webkit-text-stroke: 0;
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+}
+
+.numbered-rule {
+  background: var(--color-signal);
+  transform-origin: left center;
+}
+
+.numbered-text {
+  color: var(--color-graphite);
+}
+
+[data-tone="dark"] .numbered-text {
+  color: var(--color-ash);
+}
+
+@media (hover: hover) {
+  .numbered:hover {
+    background-color: var(--color-paper-deep);
+  }
+
+  [data-tone="dark"] .numbered:hover {
+    background-color: var(--color-ink-soft);
+  }
+
+  .numbered:hover .numbered-number {
+    color: var(--color-signal);
+    -webkit-text-stroke-color: var(--color-signal);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .numbered[data-reveal] {
+    transition:
+      opacity var(--dur-reveal) var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms),
+      transform var(--dur-reveal) var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms),
+      background-color 500ms var(--ease-out-quint);
+  }
+
+  .js .numbered[data-reveal] .numbered-number {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .js .numbered[data-revealed] .numbered-number {
+    clip-path: inset(0 0 0 0);
+    transition:
+      clip-path 700ms var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms + 250ms),
+      color 500ms var(--ease-out-quint),
+      -webkit-text-stroke-color 500ms var(--ease-out-quint);
+  }
+
+  .js .numbered[data-revealed] .numbered-number::after {
+    animation: principle-sweep 1.5s var(--ease-in-out-soft) calc(var(--reveal-delay, 0) * 1ms + 250ms) both;
+  }
+
+  .js .numbered[data-reveal] .numbered-rule {
+    transform: scaleX(0);
+  }
+
+  .js .numbered[data-revealed] .numbered-rule {
+    transform: none;
+    transition: transform 900ms var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms + 450ms);
+  }
+}
