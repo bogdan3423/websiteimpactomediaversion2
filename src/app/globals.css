@@ -1,0 +1,686 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------------
+   Design tokens
+   A deliberately small system: warm paper, ink, one signal accent, hairlines.
+   ------------------------------------------------------------------------ */
+@theme {
+  --color-paper: #f2f0eb;
+  --color-paper-deep: #e7e4dc;
+  --color-surface: #fbfaf8;
+  --color-ink: #111110;
+  --color-ink-soft: #1b1b19;
+  --color-graphite: #57564f;
+  --color-ash: #a6a49c;
+  --color-line: #d3cfc5;
+  --color-line-dark: #34342f;
+  --color-signal: #e2431b;
+
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --animate-rise: rise 0.95s var(--ease-out-quint) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 0.6em, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+:root {
+  --gutter: clamp(1.25rem, 0.6rem + 3.2vw, 3.5rem);
+  --section: clamp(5rem, 2.6rem + 7.5vw, 10.5rem);
+  --section-tight: clamp(3.5rem, 2rem + 4.5vw, 6.5rem);
+  --header-h: 4.75rem;
+  --dur-micro: 220ms;
+  --dur-reveal: 900ms;
+  color-scheme: light;
+}
+
+/* ------------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------------ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: calc(var(--header-h) + 1.5rem);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 560;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Typography scale (fluid). Archivo is used slightly expanded to echo the
+   wide capitals of the ImpactoMedia wordmark.
+   ------------------------------------------------------------------------ */
+@utility type-display {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 112;
+  font-weight: 540;
+  font-size: clamp(2.6rem, 1.15rem + 6.1vw, 7.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+@utility type-h1 {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 110;
+  font-weight: 550;
+  font-size: clamp(2.4rem, 1.35rem + 4.3vw, 5.6rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+@utility type-h2 {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 106;
+  font-weight: 550;
+  font-size: clamp(1.95rem, 1.35rem + 2.45vw, 3.75rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+
+@utility type-h3 {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 102;
+  font-weight: 560;
+  font-size: clamp(1.3rem, 1.12rem + 0.7vw, 1.8rem);
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+}
+
+@utility type-h4 {
+  font-family: var(--font-display);
+  font-weight: 580;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+
+@utility type-lead {
+  font-size: clamp(1.125rem, 1.03rem + 0.42vw, 1.4rem);
+  line-height: 1.5;
+  letter-spacing: -0.006em;
+}
+
+@utility type-label {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 112;
+  font-size: 0.75rem;
+  font-weight: 560;
+  line-height: 1.2;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+@utility type-number {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 118;
+  font-weight: 500;
+  font-size: clamp(3.2rem, 2rem + 4.8vw, 6.6rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ------------------------------------------------------------------------
+   Layout helpers
+   ------------------------------------------------------------------------ */
+@utility shell {
+  width: 100%;
+  max-width: 96rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility section {
+  padding-block: var(--section);
+}
+
+@utility section-tight {
+  padding-block: var(--section-tight);
+}
+
+@utility grid-site {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: clamp(1rem, 0.5rem + 1.6vw, 2rem);
+
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  @media (width >= 64rem) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Interaction primitives
+   ------------------------------------------------------------------------ */
+
+/* Animated underline drawn with a pseudo element (no gradients). */
+@utility link-line {
+  position: relative;
+  text-decoration: none;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.15em;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 420ms var(--ease-out-quint);
+  }
+
+  &:hover::after,
+  &:focus-visible::after,
+  &[aria-current="page"]::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+@utility link-static {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: text-decoration-color var(--dur-micro) ease;
+
+  &:hover {
+    text-decoration-color: var(--color-signal);
+  }
+}
+
+/* Arrow nudge used by links and buttons. */
+.arrow-nudge {
+  transition: transform 360ms var(--ease-out-quint);
+}
+
+.group:hover .arrow-nudge,
+.group:focus-visible .arrow-nudge {
+  transform: translate3d(0.22em, -0.22em, 0);
+}
+
+.group:hover .arrow-nudge-right,
+.group:focus-visible .arrow-nudge-right {
+  transform: translate3d(0.3em, 0, 0);
+}
+
+/* ------------------------------------------------------------------------
+   Scroll reveal. Content is only hidden once JavaScript has confirmed it can
+   reveal it again (html.js is set inline in <head>), so nothing is lost if
+   scripts fail. Reduced-motion users get content immediately.
+   ------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 1.5rem, 0);
+    transition:
+      opacity var(--dur-reveal) var(--ease-out-quint),
+      transform var(--dur-reveal) var(--ease-out-quint);
+    transition-delay: calc(var(--reveal-delay, 0) * 1ms);
+  }
+
+  .js [data-reveal="fade"] {
+    transform: none;
+  }
+
+  .js [data-reveal="media"] {
+    transform: none;
+    clip-path: inset(0 0 6% 0);
+    transition:
+      opacity 1.1s var(--ease-out-quint),
+      clip-path 1.3s var(--ease-out-quint);
+  }
+
+  .js [data-reveal="media"] :where(img, video) {
+    transform: scale(1.045);
+    transition: transform 1.6s var(--ease-out-quint);
+  }
+
+  .js [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+
+  .js [data-reveal="media"][data-revealed] :where(img, video) {
+    transform: none;
+  }
+
+  .hero-rise {
+    animation: var(--animate-rise);
+    animation-delay: calc(var(--rise-delay, 0) * 1ms);
+  }
+}
+
+/* Long-form legal and editorial text. */
+.prose-legal {
+  color: var(--color-ink);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.prose-legal > section + section {
+  margin-top: 3.5rem;
+  padding-top: 3.5rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.prose-legal h3 {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 104;
+  font-size: clamp(1.35rem, 1.2rem + 0.6vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin-bottom: 1.25rem;
+}
+
+.prose-legal h4 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin: 1.75rem 0 0.75rem;
+}
+
+.prose-legal p,
+.prose-legal ul,
+.prose-legal ol,
+.prose-legal dl,
+.prose-legal .legal-table-wrap {
+  margin-bottom: 1.1rem;
+  max-width: 44rem;
+}
+
+.prose-legal ul,
+.prose-legal ol {
+  padding-left: 1.15rem;
+}
+
+.prose-legal ul {
+  list-style: square;
+}
+
+.prose-legal ol {
+  list-style: decimal;
+}
+
+.prose-legal li + li {
+  margin-top: 0.5rem;
+}
+
+.prose-legal li::marker {
+  color: var(--color-graphite);
+}
+
+.prose-legal a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  overflow-wrap: anywhere;
+}
+
+.prose-legal a:hover {
+  text-decoration-color: var(--color-signal);
+}
+
+.prose-legal strong {
+  font-weight: 600;
+}
+
+.prose-legal dl {
+  border-top: 1px solid var(--color-line);
+}
+
+.prose-legal dl > div {
+  display: grid;
+  gap: 0.25rem 1.5rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+@media (width >= 40rem) {
+  .prose-legal dl > div {
+    grid-template-columns: 13rem 1fr;
+  }
+}
+
+.prose-legal dt {
+  color: var(--color-graphite);
+  font-size: 0.9375rem;
+}
+
+.prose-legal .legal-table-wrap {
+  max-width: none;
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+}
+
+.prose-legal table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.prose-legal th,
+.prose-legal td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.prose-legal th {
+  font-family: var(--font-display);
+  font-weight: 580;
+  background: var(--color-paper-deep);
+}
+
+.prose-legal tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Native disclosure animation where supported (Chromium 131+, Safari 18.2+ partially). */
+:root {
+  interpolate-size: allow-keywords;
+}
+
+.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+}
+
+.faq-item[open]::details-content {
+  block-size: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faq-item::details-content {
+    transition:
+      block-size 450ms var(--ease-out-quint),
+      content-visibility 450ms allow-discrete;
+  }
+}
+
+.faq-item summary:focus-visible {
+  outline-offset: 4px;
+}
+
+/* Display size for narrower multi-column heroes (keeps lines shorter). */
+@utility type-display-md {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 112;
+  font-weight: 540;
+  font-size: clamp(2.5rem, 1.05rem + 4.9vw, 5.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+/* ------------------------------------------------------------------------
+   Hero headline: words rise from individual masks, then the last word rotates.
+   The masks reserve a generous band above and below each word (padding,
+   pulled back with negative margins) so Romanian diacritics such as the
+   comma under ț/ș or the caret on î are never clipped or cut in half.
+   Masks are transparent, so overlapping neighbouring lines is harmless.
+   ------------------------------------------------------------------------ */
+.headline-mask,
+.rotating-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.32em 0.06em 0.42em;
+  margin: -0.32em -0.06em -0.42em;
+}
+
+.headline-word {
+  display: inline-block;
+  transform-origin: 0% 100%;
+}
+
+.rotating-word {
+  display: inline-grid;
+  color: var(--color-signal);
+}
+
+.rotating-word > * {
+  grid-area: 1 / 1;
+  justify-self: start;
+  white-space: nowrap;
+}
+
+.rotating-word-sizer {
+  visibility: hidden;
+}
+
+/* Phones: huge, tight, flush-left stack; the closing phrase becomes a full-bleed ink band. */
+.headline-accent {
+  display: inline;
+}
+
+@media (width < 48rem) {
+  .hero-headline {
+    font-size: clamp(3.1rem, 17.2vw, 6rem);
+    font-variation-settings: "wdth" 96;
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+  }
+
+  .headline-accent {
+    display: block;
+    margin: 0.22em calc(-1 * var(--gutter)) 0;
+    padding: 0.12em var(--gutter) 0.2em;
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .headline-accent .rotating-word {
+    color: var(--color-signal);
+  }
+}
+
+@media (width < 48rem) and (prefers-reduced-motion: no-preference) {
+  .headline-accent {
+    animation: band-sweep 900ms var(--ease-in-out-soft) 380ms both;
+  }
+}
+
+@keyframes band-sweep {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Ticker under the phone headline: one slow CSS loop, static without motion. */
+.hero-ticker {
+  animation: ticker 36s linear infinite;
+  will-change: transform;
+}
+
+@keyframes ticker {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ticker {
+    animation: none;
+    width: auto;
+  }
+}
+
+@keyframes headline-rise {
+  from {
+    transform: translate3d(0, 150%, 0) rotate(4deg);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes word-in {
+  from {
+    transform: translate3d(0, 150%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes word-out {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(0, -150%, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .headline-word {
+    animation: headline-rise 1.1s var(--ease-out-quint) both;
+    animation-delay: calc(var(--i, 0) * 60ms + 100ms);
+  }
+
+  .rotating-word-in {
+    animation: word-in 850ms var(--ease-out-quint) both;
+  }
+
+  .rotating-word-out {
+    animation: word-out 850ms var(--ease-out-quint) both;
+  }
+
+  .scroll-cue {
+    animation: scroll-cue 2.2s var(--ease-in-out-soft) infinite;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Kinetic section headings (clients section): the hero's motion language,
+   started by the reveal observer when the heading scrolls into view.
+   ------------------------------------------------------------------------ */
+.kinetic-heading {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 110;
+  font-weight: 540;
+  font-size: clamp(2.6rem, 1.4rem + 4.6vw, 6.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.kinetic-accent {
+  color: var(--color-signal);
+}
+
+@media (width < 48rem) {
+  .kinetic-heading {
+    font-size: clamp(2.9rem, 15vw, 5.2rem);
+    font-variation-settings: "wdth" 96;
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+  }
+
+}
+
+/* The wrapper itself does not fade; its words do the work. */
+.js [data-reveal="words"] {
+  opacity: 1 !important;
+  transform: none !important;
+  /* the generic reveal sets clip-path, which would crop the full-bleed band */
+  clip-path: none !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal="words"] .kinetic-word {
+    animation-play-state: paused;
+  }
+
+  .js [data-reveal="words"][data-revealed] .kinetic-word {
+    animation-play-state: running;
+  }
+
+}
+

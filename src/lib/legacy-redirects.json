@@ -1,0 +1,52 @@
+[
+  {
+    "source": "/index",
+    "destination": "/",
+    "reason": "Old static homepage file (/index.html)."
+  },
+  {
+    "source": "/html",
+    "destination": "/",
+    "reason": "Old /html/ folder index, already 301 to / on the live site."
+  },
+  {
+    "source": "/html/index",
+    "destination": "/",
+    "reason": "Duplicate of the old homepage."
+  },
+  {
+    "source": "/html/services",
+    "destination": "/servicii",
+    "reason": "Old services page, same content."
+  },
+  {
+    "source": "/html/about-us",
+    "destination": "/despre-noi",
+    "reason": "Old about page, same content."
+  },
+  {
+    "source": "/html/contact",
+    "destination": "/contact",
+    "reason": "Old contact page, same content."
+  },
+  {
+    "source": "/html/studii-de-caz",
+    "destination": "/servicii",
+    "reason": "LuxuraInvest case study (video + website). Removed in the redesign; /servicii describes the same video production and web development work."
+  },
+  {
+    "source": "/html/privacy-policy",
+    "destination": "/politica-de-confidentialitate",
+    "reason": "Same legal text."
+  },
+  {
+    "source": "/html/cookie-policy",
+    "destination": "/politica-de-cookie-uri",
+    "reason": "Same legal text."
+  },
+  {
+    "source": "/html/terms-and-conditions",
+    "destination": "/termeni-si-conditii",
+    "reason": "Same legal text."
+  }
+]
