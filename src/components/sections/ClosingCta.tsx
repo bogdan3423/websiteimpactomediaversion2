@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { site } from "@/content/site";
-import { keepHyphenated } from "@/lib/typography";
+import { afterWords, animatedTitle } from "@/components/motion/SplitWords";
 
 type Props = {
   kicker: string;
@@ -16,17 +16,28 @@ export function ClosingCta({ kicker, title, text, cta = { label: "Hai să discut
     <section className="bg-ink text-paper" aria-labelledby="closing-title">
       <div className="shell section">
         <div className="grid-site gap-y-10">
-          <div className="col-span-4 md:col-span-8 lg:col-span-8" suppressHydrationWarning data-reveal>
-            <p className="type-label text-ash">{kicker}</p>
-            <h2 id="closing-title" className="type-h1 mt-6">
-              {keepHyphenated(title)}
+          <div className="col-span-4 md:col-span-8 lg:col-span-8">
+            <p className="type-label text-ash" suppressHydrationWarning data-reveal="fade">
+              {kicker}
+            </p>
+            <h2 id="closing-title" className="type-h1 mt-6" suppressHydrationWarning data-reveal="words">
+              {animatedTitle(title)}
             </h2>
-            {text ? <p className="type-lead mt-6 max-w-xl text-ash">{text}</p> : null}
+            {text ? (
+              <p
+                className="type-lead mt-6 max-w-xl text-ash"
+                suppressHydrationWarning
+                data-reveal
+                style={{ "--reveal-delay": afterWords(title) } as React.CSSProperties}
+              >
+                {text}
+              </p>
+            ) : null}
           </div>
           <div
             className="col-span-4 flex flex-col justify-end gap-8 md:col-span-5 lg:col-span-3 lg:col-start-10"
             suppressHydrationWarning data-reveal
-            style={{ "--reveal-delay": 120 } as React.CSSProperties}
+            style={{ "--reveal-delay": afterWords(title, 300) } as React.CSSProperties}
           >
             <ButtonLink href={cta.href} variant="solid-inverse" className="w-full">
               {cta.label}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { keepHyphenated } from "@/lib/typography";
+import { afterWords, animatedTitle } from "@/components/motion/SplitWords";
 
 type Props = {
   label: string;
@@ -32,11 +32,11 @@ export function PageHero({ label, title, intro, breadcrumb, aside }: Props) {
       </div>
 
       <div className="grid-site mt-[clamp(2.5rem,1.5rem+4vw,5.5rem)] gap-y-8">
-        <h1 className="type-h1 hero-rise col-span-4 md:col-span-8 lg:col-span-10">{keepHyphenated(title)}</h1>
+        <h1 className="type-h1 col-span-4 md:col-span-8 lg:col-span-10">{animatedTitle(title)}</h1>
         {intro ? (
           <div
             className="hero-rise col-span-4 md:col-span-6 md:col-start-3 lg:col-span-5 lg:col-start-7"
-            style={{ "--rise-delay": 140 } as React.CSSProperties}
+            style={{ "--rise-delay": afterWords(title, 120) } as React.CSSProperties}
           >
             <div className="type-lead text-graphite">{intro}</div>
             {aside}

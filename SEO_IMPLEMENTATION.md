@@ -99,6 +99,10 @@ checklist). Valid markup never guarantees a rich result.
 
 ## 7. Performance and rendering
 
+- **Scroll reveals trigger as soon as an element starts entering the viewport.** The observer
+  fires at about 1% visibility (about 4% of the screen above the bottom edge) instead of 12%
+  visibility with a 8% bottom margin, so large blocks and images are still animating in while
+  they scroll onto the screen rather than appearing only after they are fully visible.
 - **Scroll reveals no longer wait for React.** The `RevealObserver` client component was replaced
   by a ~700-byte inline script that runs as soon as the body is parsed (plus a MutationObserver for
   client-side navigations). The CSS now keys off a `data-revealed` attribute, and each

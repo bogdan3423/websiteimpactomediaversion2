@@ -33,7 +33,7 @@ export default function ContactPage() {
 
       <section className="shell pb-[var(--section)]" aria-label="Date de contact și formular">
         <div className="grid-site gap-y-16 border-t border-ink pt-[var(--section-tight)]">
-          <aside className="col-span-4 md:col-span-8 lg:col-span-4">
+          <aside className="col-span-4 md:col-span-8 lg:col-span-4" suppressHydrationWarning data-reveal>
             <div className="lg:sticky lg:top-[calc(var(--header-h)+2rem)]">
               <a href={site.phone.href} className="group block border-b border-line pb-8" aria-label={`Sună ImpactoMedia la ${site.phone.display}`}>
                 <span className="type-label text-graphite">Sună-ne direct</span>
@@ -71,7 +71,12 @@ export default function ContactPage() {
             </div>
           </aside>
 
-          <div className="col-span-4 md:col-span-8 lg:col-span-7 lg:col-start-6">
+          <div
+            className="col-span-4 md:col-span-8 lg:col-span-7 lg:col-start-6"
+            suppressHydrationWarning
+            data-reveal
+            style={{ "--reveal-delay": 140 } as React.CSSProperties}
+          >
             <h2 className="type-h3 mb-10">Spune-ne despre proiectul tău</h2>
             <ContactForm />
           </div>

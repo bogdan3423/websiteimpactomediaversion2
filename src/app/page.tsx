@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ClientWall } from "@/components/sections/ClientWall";
 import { ClosingCta } from "@/components/sections/ClosingCta";
-import { NumberedList } from "@/components/sections/NumberedList";
+import { PrinciplesGrid } from "@/components/sections/PrinciplesGrid";
 import { SectionIntro } from "@/components/sections/SectionIntro";
 import { ServiceIndex } from "@/components/sections/ServiceIndex";
 import { StatsBand } from "@/components/sections/StatsBand";
@@ -13,6 +13,7 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { principles } from "@/content/agency";
 import { HeroHeadline } from "@/components/sections/HeroHeadline";
 import { KineticHeading } from "@/components/sections/KineticHeading";
+import { SplitWords } from "@/components/motion/SplitWords";
 import { clients } from "@/content/clients";
 import { TeamBadge } from "@/components/sections/TeamBadge";
 import { homeFaq } from "@/content/faq";
@@ -186,7 +187,7 @@ export default function HomePage() {
           title="Construim fiecare colaborare în jurul obiectivului, resurselor disponibile și etapelor reale ale proiectului."
         />
         <div className="mt-[var(--section-tight)]">
-          <NumberedList items={principles} columns={3} />
+          <PrinciplesGrid items={principles} />
         </div>
       </section>
 
@@ -213,12 +214,19 @@ export default function HomePage() {
       <section className="border-t border-line" aria-labelledby="faq-title">
         <div className="shell section grid-site gap-y-12">
           <div className="col-span-4 md:col-span-8 lg:col-span-4">
-            <div className="lg:sticky lg:top-[calc(var(--header-h)+2rem)]" suppressHydrationWarning data-reveal>
-              <Eyebrow index="06">Întrebări frecvente</Eyebrow>
-              <h2 id="faq-title" className="type-h2 mt-6">
-                Ce ne întreabă clienții des.
+            <div className="lg:sticky lg:top-[calc(var(--header-h)+2rem)]">
+              <div suppressHydrationWarning data-reveal="fade">
+                <Eyebrow index="06">Întrebări frecvente</Eyebrow>
+              </div>
+              <h2 id="faq-title" className="type-h2 mt-6" suppressHydrationWarning data-reveal="words">
+                <SplitWords text="Ce ne întreabă clienții des." />
               </h2>
-              <p className="mt-6 max-w-sm text-graphite">
+              <p
+                className="mt-6 max-w-sm text-graphite"
+                suppressHydrationWarning
+                data-reveal
+                style={{ "--reveal-delay": 420 } as React.CSSProperties}
+              >
                 Cum abordăm producția video, publicitatea plătită și dezvoltarea web pentru diferite nevoi ale
                 afacerii.
               </p>

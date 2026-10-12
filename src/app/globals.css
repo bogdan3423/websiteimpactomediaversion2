@@ -42,7 +42,7 @@
   --section-tight: clamp(3.5rem, 2rem + 4.5vw, 6.5rem);
   --header-h: 4.75rem;
   --dur-micro: 220ms;
-  --dur-reveal: 900ms;
+  --dur-reveal: 1100ms;
   color-scheme: light;
 }
 
@@ -271,7 +271,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .js [data-reveal] {
     opacity: 0;
-    transform: translate3d(0, 1.5rem, 0);
+    transform: translate3d(0, 2.25rem, 0);
     transition:
       opacity var(--dur-reveal) var(--ease-out-quint),
       transform var(--dur-reveal) var(--ease-out-quint);
@@ -684,3 +684,172 @@
 
 }
 
+
+/* ------------------------------------------------------------------------
+   Homepage principles: outlined numerals, drawn geometric marks, ink hover.
+   ------------------------------------------------------------------------ */
+.principle {
+  transition:
+    background-color 500ms var(--ease-out-quint),
+    color 500ms var(--ease-out-quint),
+    opacity var(--dur-reveal) var(--ease-out-quint),
+    transform var(--dur-reveal) var(--ease-out-quint);
+}
+
+.principle-title {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 106;
+  font-weight: 550;
+  font-size: clamp(1.75rem, 1.2rem + 1.45vw, 2.6rem);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.principle-number {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-ink);
+  transition:
+    color 500ms var(--ease-out-quint),
+    -webkit-text-stroke-color 500ms var(--ease-out-quint);
+}
+
+.principle-number {
+  position: relative;
+  display: inline-block;
+}
+
+/* Orange copy of the numeral used by the reveal sweep. */
+.principle-number::after {
+  content: attr(data-n);
+  position: absolute;
+  inset: 0;
+  color: var(--color-signal);
+  -webkit-text-stroke: 0;
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+}
+
+.principle-text {
+  color: var(--color-graphite);
+  transition: color 500ms var(--ease-out-quint);
+}
+
+.principle-rule {
+  background: var(--color-signal);
+  transform-origin: left center;
+}
+
+.principle-stroke {
+  stroke: var(--color-ink);
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  transition: stroke 500ms var(--ease-out-quint);
+}
+
+.principle-fill {
+  fill: var(--color-signal);
+}
+
+@media (hover: hover) {
+  .principle:hover {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .principle:hover .principle-number {
+    color: var(--color-signal);
+    -webkit-text-stroke-color: var(--color-signal);
+  }
+
+  .principle:hover .principle-text {
+    color: var(--color-ash);
+  }
+
+  .principle:hover .principle-stroke {
+    stroke: var(--color-paper);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Keep the reveal delay on opacity/transform only, so hover colours respond at once. */
+  .js .principle[data-reveal] {
+    transition:
+      opacity var(--dur-reveal) var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms),
+      transform var(--dur-reveal) var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms),
+      background-color 500ms var(--ease-out-quint),
+      color 500ms var(--ease-out-quint);
+  }
+
+  .js .principle[data-reveal] .principle-stroke {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .js .principle[data-reveal] .principle-fill,
+  .js .principle[data-reveal] .principle-rule {
+    opacity: 0;
+    transform: scale(0.6);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .js .principle[data-reveal] .principle-rule {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  /* Numerals: the outline is uncovered left to right while an orange fill sweeps
+     through just ahead of it and then moves on, leaving the outline. */
+  .js .principle[data-reveal] .principle-number {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .js .principle[data-revealed] .principle-number {
+    clip-path: inset(0 0 0 0);
+    transition:
+      clip-path 700ms var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms + 250ms),
+      color 500ms var(--ease-out-quint),
+      -webkit-text-stroke-color 500ms var(--ease-out-quint);
+  }
+
+  .js .principle[data-revealed] .principle-number::after {
+    animation: principle-sweep 1.5s var(--ease-in-out-soft) calc(var(--reveal-delay, 0) * 1ms + 250ms) both;
+  }
+
+  .js .principle[data-revealed] .principle-stroke {
+    stroke-dashoffset: 0;
+    transition:
+      stroke-dashoffset 1.2s var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms + 250ms),
+      stroke 500ms var(--ease-out-quint);
+  }
+
+  .js .principle[data-revealed] .principle-fill {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 600ms var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms + 700ms),
+      transform 800ms var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms + 700ms);
+  }
+
+  .js .principle[data-revealed] .principle-rule {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 300ms linear calc(var(--reveal-delay, 0) * 1ms + 450ms),
+      transform 900ms var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms + 450ms);
+  }
+}
+
+@keyframes principle-sweep {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  45% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 100%);
+  }
+}

@@ -60,11 +60,15 @@ export function LegalPage({ doc, path, description }: Props) {
           </aside>
 
           <div className="col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-5">
-            <div className="border-l-2 border-signal bg-surface px-6 py-6 md:px-8">
+            <div className="border-l-2 border-signal bg-surface px-6 py-6 md:px-8" suppressHydrationWarning data-reveal>
               <h2 className="type-h3">{doc.summaryTitle}</h2>
               <div className="mt-3 max-w-2xl text-graphite" dangerouslySetInnerHTML={{ __html: doc.summaryHtml }} />
             </div>
-            <article className="prose-legal mt-14 [&_section]:scroll-mt-[calc(var(--header-h)+1.5rem)]" dangerouslySetInnerHTML={{ __html: doc.bodyHtml }} />
+            <article
+              suppressHydrationWarning
+              data-reveal
+              style={{ "--reveal-delay": 120 } as React.CSSProperties}
+              className="prose-legal mt-14 [&_section]:scroll-mt-[calc(var(--header-h)+1.5rem)]" dangerouslySetInnerHTML={{ __html: doc.bodyHtml }} />
           </div>
         </div>
       </section>

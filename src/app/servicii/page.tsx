@@ -12,6 +12,7 @@ import { servicesFaq } from "@/content/faq";
 import { ppcService, process, serviceSummaries, videoService, webService } from "@/content/services";
 import { pageMetadata } from "@/lib/metadata";
 import { keepHyphenated } from "@/lib/typography";
+import { SplitWords } from "@/components/motion/SplitWords";
 import { absoluteUrl } from "@/lib/site-url";
 import { breadcrumbSchema, graph, organizationId, webPageSchema } from "@/lib/structured-data";
 
@@ -23,11 +24,15 @@ export const metadata: Metadata = pageMetadata({ title, description, path: "/ser
 
 function ServiceHeader({ index, eyebrow, title, tone = "light" }: { index: string; eyebrow: string; title: string; tone?: "light" | "dark" }) {
   return (
-    <div suppressHydrationWarning data-reveal>
-      <Eyebrow index={index} tone={tone}>
-        {eyebrow}
-      </Eyebrow>
-      <h2 className="type-h1 mt-8 max-w-[18ch]">{keepHyphenated(title)}</h2>
+    <div>
+      <div suppressHydrationWarning data-reveal="fade">
+        <Eyebrow index={index} tone={tone}>
+          {eyebrow}
+        </Eyebrow>
+      </div>
+      <h2 className="type-h1 mt-8 max-w-[18ch]" suppressHydrationWarning data-reveal="words">
+        <SplitWords text={title} />
+      </h2>
     </div>
   );
 }
@@ -238,10 +243,12 @@ export default function ServicesPage() {
 
       {/* FAQ -------------------------------------------------------------------- */}
       <section className="shell section grid-site gap-y-12" aria-labelledby="inainte-title">
-        <div className="col-span-4 md:col-span-8 lg:col-span-4" suppressHydrationWarning data-reveal>
-          <Eyebrow>Întrebări frecvente</Eyebrow>
-          <h2 id="inainte-title" className="type-h2 mt-6">
-            Înainte să începem
+        <div className="col-span-4 md:col-span-8 lg:col-span-4">
+          <div suppressHydrationWarning data-reveal="fade">
+            <Eyebrow>Întrebări frecvente</Eyebrow>
+          </div>
+          <h2 id="inainte-title" className="type-h2 mt-6" suppressHydrationWarning data-reveal="words">
+            <SplitWords text="Înainte să începem" />
           </h2>
         </div>
         <div className="col-span-4 md:col-span-8 lg:col-span-7 lg:col-start-6" suppressHydrationWarning data-reveal>

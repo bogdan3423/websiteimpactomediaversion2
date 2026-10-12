@@ -6,6 +6,7 @@ import { SectionIntro } from "@/components/sections/SectionIntro";
 import { StatsBand } from "@/components/sections/StatsBand";
 import { TeamGrid } from "@/components/sections/TeamGrid";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { SplitWords } from "@/components/motion/SplitWords";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { capabilities, principles } from "@/content/agency";
 import { site } from "@/content/site";
@@ -42,9 +43,8 @@ export default function AboutPage() {
             <Eyebrow index="01">ImpactoMedia</Eyebrow>
           </div>
           <div className="col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-5">
-            <h2 id="poveste-title" className="type-h2" suppressHydrationWarning data-reveal>
-              Marketingul funcționează cel mai bine atunci când mesajul, distribuția și experiența digitală susțin
-              același obiectiv.
+            <h2 id="poveste-title" className="type-h2" suppressHydrationWarning data-reveal="words">
+              <SplitWords text="Marketingul funcționează cel mai bine atunci când mesajul, distribuția și experiența digitală susțin același obiectiv." />
             </h2>
             <div className="mt-12 grid gap-8 text-graphite md:grid-cols-2" suppressHydrationWarning data-reveal>
               <p>
