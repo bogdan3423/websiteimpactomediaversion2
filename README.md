@@ -140,3 +140,4 @@ Next.js 16 works (Vercel, Netlify, a Node server with `npm run start`, Docker).
 4. **English version.** The old site had a client-side machine-style EN toggle. The brief
    requires a Romanian-only site, so it was not rebuilt.
 # websiteimpactomediav2
+# websiteimpactomediaversion2
