@@ -1,7 +1,7 @@
 import { stats } from "@/content/agency";
 
 /**
- * "60K+ €" -> number 60 counted up from 0, suffix "K+ €" set in signal orange.
+ * "75K+ €" -> number 75 counted up from 0, suffix "K+ €" set in signal orange.
  * The server renders the final value, so crawlers, no-JS and reduced-motion
  * visitors always get the real figure; RevealScript counts the number up when the
  * panel appears.

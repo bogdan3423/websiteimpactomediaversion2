@@ -1035,3 +1035,80 @@
     transition: transform 900ms var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms + 450ms);
   }
 }
+
+
+/* ------------------------------------------------------------------------
+   Client wall (homepage): logos on the hairline grid. With hover available the
+   wall is monochrome and calm; a cell lifts to surface white, the logo regains
+   its colours and the name slides in. Touch screens keep the logos in colour.
+   ------------------------------------------------------------------------ */
+.client-cell {
+  transition:
+    background-color 500ms var(--ease-out-quint),
+    opacity var(--dur-reveal) var(--ease-out-quint),
+    transform var(--dur-reveal) var(--ease-out-quint);
+}
+
+.client-dot {
+  transform: scale(0);
+  transition: transform 450ms var(--ease-out-quint);
+}
+
+.client-logo {
+  mix-blend-mode: multiply;
+  transition:
+    filter 500ms var(--ease-out-quint),
+    opacity 500ms var(--ease-out-quint),
+    transform 600ms var(--ease-out-quint);
+}
+
+.client-name {
+  color: var(--color-graphite);
+  opacity: 0;
+  transform: translate3d(0, 0.5rem, 0);
+  transition:
+    opacity 400ms var(--ease-out-quint),
+    transform 500ms var(--ease-out-quint);
+}
+
+@media (hover: hover) {
+  .client-logo {
+    filter: grayscale(1);
+    opacity: 0.7;
+  }
+
+  /* Gold / light-grey artwork would vanish in greyscale; give it more density. */
+  .client-logo-pale {
+    filter: grayscale(1) contrast(1.5) brightness(0.65);
+    opacity: 0.85;
+  }
+
+  .client-cell:hover {
+    background-color: var(--color-surface);
+  }
+
+  .client-cell:hover .client-logo {
+    filter: none;
+    opacity: 1;
+    transform: scale(1.06);
+  }
+
+  .client-cell:hover .client-dot {
+    transform: none;
+  }
+
+  .client-cell:hover .client-name {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Keep the reveal delay on opacity/transform only, so hover responds at once. */
+  .js .client-cell[data-reveal] {
+    transition:
+      opacity var(--dur-reveal) var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms),
+      transform var(--dur-reveal) var(--ease-out-quint) calc(var(--reveal-delay, 0) * 1ms),
+      background-color 500ms var(--ease-out-quint);
+  }
+}

@@ -6,7 +6,7 @@ import vlad from "@/assets/team/vlad-potra.webp";
 /** Verified figures from the original homepage ("Cifre și informații"). */
 export const stats = [
   { value: "50+", label: "Producții video realizate pentru campaniile clienților", tag: "Video" },
-  { value: "60K+ €", label: "Bugete gestionate în campanii de publicitate plătită", tag: "PPC" },
+  { value: "75K+ €", label: "Bugete gestionate în campanii de publicitate plătită", tag: "PPC" },
   { value: "25+", label: "Website-uri de prezentare și magazine online realizate", tag: "Web" },
 ];
 

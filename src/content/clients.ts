@@ -1,5 +1,8 @@
 import type { StaticImageData } from "next/image";
 import abtTrans from "@/assets/clients/abt-trans.png";
+import jewel333 from "@/assets/clients/333jewel.png";
+import iDiamonds from "@/assets/clients/idiamonds.png";
+import portugalAutoRentals from "@/assets/clients/portugal-auto-rentals.png";
 import arcaSeniorilor from "@/assets/clients/arca-seniorilor.png";
 import coolinaria from "@/assets/clients/coolinaria.png";
 import doctorUsi from "@/assets/clients/doctor-usi.png";
@@ -9,6 +12,7 @@ import helios from "@/assets/clients/helios.webp";
 import luxuraInvest from "@/assets/clients/luxura-invest.png";
 import mvpDesign from "@/assets/clients/mvp-design.png";
 import ozon from "@/assets/clients/ozon.png";
+import paragonPadel from "@/assets/clients/paragon-padel.png";
 import remotrail from "@/assets/clients/remotrail.png";
 import somInVia from "@/assets/clients/som-in-via.png";
 
@@ -16,15 +20,19 @@ export type Client = {
   name: string;
   logo: StaticImageData | { src: string; width: number; height: number };
   /** Visual footprint used to balance logos of very different proportions. */
-  shape: "wide" | "medium" | "square";
+  shape: "wide" | "medium" | "square" | "tall";
   /** Pale artwork (gold, light grey) gets extra contrast in the greyscale wall. */
   pale?: boolean;
 };
 
 /** Client logos shown on the original homepage ("Hai să vezi cu cine am lucrat"). */
 export const clients: Client[] = [
+  { name: "Portugal Auto Rentals", logo: portugalAutoRentals, shape: "wide" },
+  { name: "iDiamonds", logo: iDiamonds, shape: "wide" },
+  { name: "333 Jewel", logo: jewel333, shape: "medium" },
+  { name: "Paragon Padel", logo: paragonPadel, shape: "tall", pale: true },
   { name: "Luxura Invest", logo: luxuraInvest, shape: "wide" },
-  { name: "Helios", logo: helios, shape: "wide" },
+  { name: "Helios", logo: helios, shape: "wide", pale: true },
   { name: "Doctor Uși Cluj 24", logo: doctorUsi, shape: "medium" },
   { name: "Wine District", logo: { src: "/media/clients/wine-district.svg", width: 510, height: 102 }, shape: "wide", pale: true },
   { name: "Coolinaria", logo: coolinaria, shape: "square" },
@@ -33,7 +41,7 @@ export const clients: Client[] = [
   { name: "MVP Design", logo: mvpDesign, shape: "medium" },
   { name: "Golden Hands Salon", logo: goldenHands, shape: "wide", pale: true },
   { name: "Ozon", logo: ozon, shape: "square" },
-  { name: "Arca Seniorilor", logo: arcaSeniorilor, shape: "medium" },
+  { name: "Arca Seniorilor", logo: arcaSeniorilor, shape: "square" },
   { name: "RemoTrail", logo: remotrail, shape: "wide" },
   { name: "ABT Trans", logo: abtTrans, shape: "medium" },
 ];

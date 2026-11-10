@@ -17,6 +17,9 @@ const noIndex = shouldNoIndex();
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
+  experimental: {
+    agentUpgrade: "security",
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [75, 85],

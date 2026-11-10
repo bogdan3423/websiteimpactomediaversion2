@@ -120,7 +120,7 @@ export default function HomePage() {
           </div>
 
           <div
-            className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6"
+            className="mt-6 flex flex-wrap items-center justify-between gap-4"
             suppressHydrationWarning data-reveal="fade"
           >
             <p className="type-label text-graphite">

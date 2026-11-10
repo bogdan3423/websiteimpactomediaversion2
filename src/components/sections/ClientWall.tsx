@@ -1,38 +1,89 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "@/components/ui/icons";
 import { clients } from "@/content/clients";
 
-/** Height per logo shape so very different proportions read at a similar visual weight. */
+/** Footprint per logo shape so very different proportions read at a similar visual weight. */
 const sizes = {
-  wide: "max-h-11 max-w-[90%] md:max-h-12",
-  medium: "max-h-14 max-w-[78%] md:max-h-16",
-  square: "max-h-20 max-w-[62%] md:max-h-[5.5rem]",
+  wide: "max-h-9 max-w-[78%] md:max-h-10 lg:max-h-11",
+  medium: "max-h-12 max-w-[62%] md:max-h-14",
+  square: "max-h-16 max-w-[44%] md:max-h-[4.5rem]",
+  tall: "max-h-20 max-w-[50%] md:max-h-24",
 };
 
+/** Columns per breakpoint: phones 2, tablets 4, desktop 6. */
+const columns = { base: 2, md: 4, lg: 6 } as const;
+
+/** Cells the closing CTA spans so the last row is always complete. */
+function ctaSpan(cols: number) {
+  const rest = clients.length % cols;
+  return rest === 0 ? cols : cols - rest;
+}
+
 /**
- * Real client logos in their own colours, set openly on the page (no tiles),
- * aligned on an even grid; an incomplete last row is centred. They rise in on scroll
- * and grow slightly on hover.
+ * Client logos on the same hairline grid as the principles and figures: every
+ * logo in its own sharp cell, no numbering. On devices with hover the wall
+ * reads calm and monochrome; a cell lights up on hover, the logo returns to its
+ * own colours and the name slides in. The last row is closed by an ink CTA panel
+ * that turns signal orange on hover, like the solid button.
  */
 export function ClientWall() {
+  const spans = {
+    "--cta-base": ctaSpan(columns.base),
+    "--cta-md": ctaSpan(columns.md),
+    "--cta-lg": ctaSpan(columns.lg),
+  } as React.CSSProperties;
+
   return (
-    <ul className="-mx-3 flex flex-wrap justify-center gap-y-6 md:gap-y-14 lg:-mx-5">
+    <ul className="grid grid-cols-2 border-l border-t border-line md:grid-cols-4 lg:grid-cols-6" style={spans}>
       {clients.map((client, index) => (
         <li
           key={client.name}
-          className="group flex h-24 basis-1/2 items-center justify-center px-3 sm:basis-1/3 md:h-28 lg:basis-1/6 lg:px-5"
-          suppressHydrationWarning data-reveal
-          style={{ "--reveal-delay": (index % 6) * 70 + Math.floor(index / 6) * 120 } as React.CSSProperties}
+          className="client-cell group relative flex aspect-[4/3] items-center justify-center border-b border-r border-line bg-paper md:aspect-[3/2]"
+          suppressHydrationWarning
+          data-reveal
+          style={{ "--reveal-delay": (index % 6) * 70 + Math.floor(index / 6) * 110 } as React.CSSProperties}
         >
+          <span aria-hidden="true" className="client-dot absolute right-4 top-4 h-1.5 w-1.5 bg-signal md:right-5 md:top-5" />
+
           <Image
             src={client.logo}
             alt={client.name}
             width={client.logo.width}
             height={client.logo.height}
-            sizes="(min-width: 1024px) 220px, (min-width: 640px) 30vw, 46vw"
-            className={`h-auto w-auto object-contain transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.08] ${sizes[client.shape]}`}
+            sizes="(min-width: 1024px) 200px, (min-width: 768px) 22vw, 42vw"
+            className={`client-logo h-auto w-auto object-contain ${sizes[client.shape]} ${client.pale ? "client-logo-pale" : ""}`}
           />
+
+          <span
+            aria-hidden="true"
+            className="type-label client-name absolute inset-x-4 bottom-4 truncate md:inset-x-5 md:bottom-5"
+          >
+            {client.name}
+          </span>
         </li>
       ))}
+
+      <li
+        className="col-span-(--cta-base) border-b border-r border-line md:col-span-(--cta-md) lg:col-span-(--cta-lg)"
+        suppressHydrationWarning
+        data-reveal
+        style={{ "--reveal-delay": 260 } as React.CSSProperties}
+      >
+        <Link
+          href="/contact"
+          className="group flex h-full min-h-[9rem] flex-col lg:min-h-0 justify-between gap-6 bg-ink p-4 text-paper transition-colors duration-300 hover:bg-signal md:p-5"
+        >
+          <span className="type-label flex items-center gap-2.5 text-ash transition-colors duration-300 group-hover:text-paper">
+            <span aria-hidden="true" className="h-2 w-2 bg-signal transition-colors duration-300 group-hover:bg-paper" />
+            Următorul brand
+          </span>
+          <span className="flex items-end justify-between gap-4">
+            <span className="max-w-[14ch] font-display text-[1.2rem] leading-[1.12] font-[560] tracking-[-0.012em] md:text-[1.4rem] lg:text-[clamp(1.15rem,0.6rem+0.9vw,1.45rem)]">Brandul tău poate fi aici.</span>
+            <ArrowRight className="arrow-nudge arrow-nudge-right shrink-0 text-2xl" />
+          </span>
+        </Link>
+      </li>
     </ul>
   );
 }
