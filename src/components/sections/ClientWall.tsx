@@ -70,17 +70,21 @@ export function ClientWall() {
         data-reveal
         style={{ "--reveal-delay": 260 } as React.CSSProperties}
       >
+        {/* Phones: a quiet, centred paper cell like the logos around it (ink only while pressed).
+            From tablets up, where it spans several cells, it becomes the ink panel. */}
         <Link
           href="/contact"
-          className="group flex h-full min-h-[9rem] flex-col lg:min-h-0 justify-between gap-6 bg-ink p-4 text-paper transition-colors duration-300 hover:bg-signal md:p-5"
+          className="group flex h-full flex-col items-center justify-center gap-4 bg-paper p-4 text-center text-ink transition-colors duration-300 active:bg-ink active:text-paper md:min-h-[9rem] md:gap-6 md:bg-ink md:p-5 md:text-paper md:items-stretch md:justify-between md:text-left md:hover:bg-signal lg:min-h-0"
         >
-          <span className="type-label flex items-center gap-2.5 text-ash transition-colors duration-300 group-hover:text-paper">
-            <span aria-hidden="true" className="h-2 w-2 bg-signal transition-colors duration-300 group-hover:bg-paper" />
+          <span className="type-label hidden items-center gap-2.5 text-ash transition-colors duration-300 md:flex md:group-hover:text-paper">
+            <span aria-hidden="true" className="h-1.5 w-1.5 bg-signal transition-colors duration-300 md:h-2 md:w-2 md:group-hover:bg-paper" />
             Următorul brand
           </span>
-          <span className="flex items-end justify-between gap-4">
-            <span className="max-w-[14ch] font-display text-[1.2rem] leading-[1.12] font-[560] tracking-[-0.012em] md:text-[1.4rem] lg:text-[clamp(1.15rem,0.6rem+0.9vw,1.45rem)]">Brandul tău poate fi aici.</span>
-            <ArrowRight className="arrow-nudge arrow-nudge-right shrink-0 text-2xl" />
+          <span className="flex flex-col items-center gap-3 md:flex-row md:items-end md:justify-between md:gap-4">
+            <span className="max-w-[14ch] font-display text-[1.05rem] leading-[1.12] font-[560] tracking-[-0.012em] md:text-[1.4rem] lg:text-[clamp(1.15rem,0.6rem+0.9vw,1.45rem)]">
+              Brandul tău poate fi aici.
+            </span>
+            <ArrowRight className="arrow-nudge arrow-nudge-right shrink-0 text-lg text-signal md:text-2xl md:text-current" />
           </span>
         </Link>
       </li>
