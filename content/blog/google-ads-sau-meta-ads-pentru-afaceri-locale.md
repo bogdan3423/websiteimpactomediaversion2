@@ -2,11 +2,11 @@
 title: "Google Ads sau Meta Ads: ce alegi pentru o afacere locală"
 seoTitle: "Google Ads sau Meta Ads pentru o afacere locală?"
 description: "Când merită Google Ads, când Meta Ads și când pe amândouă: diferențele explicate simplu pentru afaceri locale din Cluj-Napoca și nu numai."
-date: 2026-11-12
+date: 2026-11-10
 category: publicitate-ppc
 tags: [Google Ads, Meta Ads, Afaceri locale]
 author: rus-bogdan
-draft: true
+draft: false
 ---
 
 Pe scurt: **Google Ads** te aduce în fața oamenilor care caută deja ce oferi, iar **Meta Ads** (Facebook și Instagram) te pune în fața oamenilor care încă nu caută, dar se potrivesc profilului clientului tău. Pentru majoritatea afacerilor locale, Google aduce primele solicitări mai repede, iar Meta construiește cererea pe termen lung. Alegerea corectă depinde de cât de des este căutat serviciul tău și de cât de ușor se vede valoarea lui într-o imagine sau un video.
