@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { afterWords, animatedTitle } from "@/components/motion/SplitWords";
 
 type Props = {
@@ -7,22 +7,34 @@ type Props = {
   title: ReactNode;
   intro?: ReactNode;
   breadcrumb: string;
+  /** Intermediate breadcrumb levels between "Acasă" and the current page. */
+  parents?: Array<{ label: string; href: string }>;
   aside?: ReactNode;
 };
 
 /** Opening block shared by the inner pages: breadcrumb, large title, short intro. */
-export function PageHero({ label, title, intro, breadcrumb, aside }: Props) {
+export function PageHero({ label, title, intro, breadcrumb, parents = [], aside }: Props) {
   return (
     <section className="shell pb-[var(--section-tight)] pt-[clamp(2.5rem,1.5rem+5vw,6.5rem)]">
       <div className="flex items-center justify-between gap-6 border-b border-line pb-5">
         <nav aria-label="Breadcrumb">
-          <ol className="type-label flex items-center gap-2 text-graphite">
+          <ol className="type-label flex flex-wrap items-center gap-2 text-graphite">
             <li>
               <Link href="/" className="link-line">
                 Acasă
               </Link>
             </li>
             <li aria-hidden="true">/</li>
+            {parents.map((parent) => (
+              <Fragment key={parent.href}>
+                <li>
+                  <Link href={parent.href} className="link-line">
+                    {parent.label}
+                  </Link>
+                </li>
+                <li aria-hidden="true">/</li>
+              </Fragment>
+            ))}
             <li aria-current="page" className="text-ink">
               {breadcrumb}
             </li>

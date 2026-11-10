@@ -20,6 +20,8 @@ export const publicRoutes: PublicRoute[] = [
   { path: "/servicii", indexable: true },
   { path: "/despre-noi", indexable: true },
   { path: "/contact", indexable: true },
+  // Blog listing, categories and articles are added by the sitemap from content/blog.
+  { path: "/blog", indexable: true },
   { path: "/politica-de-confidentialitate", indexable: true },
   { path: "/politica-de-cookie-uri", indexable: true },
   { path: "/termeni-si-conditii", indexable: true },

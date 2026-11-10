@@ -40,6 +40,7 @@ export type NavItem = { label: string; href: string };
 export const mainNav: NavItem[] = [
   { label: "Servicii", href: "/servicii" },
   { label: "Despre noi", href: "/despre-noi" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 

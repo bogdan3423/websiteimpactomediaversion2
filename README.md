@@ -75,6 +75,16 @@ scripts/
   extract-legal.py          Regenerates src/content/legal/*.ts from the original legal pages
 ```
 
+### Blog
+
+Articles are Markdown files in `content/blog/` (guide in Romanian: `content/blog/README.md`).
+
+- New article: `npm run blog:new -- "Titlu"` (creates a draft and `public/blog/<slug>/` for images).
+- Drafts and future-dated articles show only in `npm run dev` (or with `BLOG_PREVIEW=true`).
+- Routes: `/blog`, `/blog/pagina/N`, `/blog/categorie/<slug>`, `/blog/<slug>`, `/blog/rss.xml`; all static.
+- Code: `src/lib/blog/` (loading, validation, Markdown, SEO), `src/components/blog/`, categories and authors in `src/content/blog.ts`.
+- The build fails with a Romanian message when an article misses SEO essentials (description, category, image alt text, H1 in body...).
+
 ### Editing content
 
 - Text, services, FAQ, team and figures: `src/content/*.ts`.

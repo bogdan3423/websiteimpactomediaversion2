@@ -11,12 +11,14 @@
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run lint && npm run build",
     "seo:check": "node scripts/seo-check.mjs",
-    "seo:test": "node scripts/seo-ci.mjs"
+    "seo:test": "node scripts/seo-ci.mjs",
+    "blog:new": "node scripts/new-post.mjs"
   },
   "engines": {
     "node": ">=20.9.0"
   },
   "dependencies": {
+    "marked": "16.4.2",
     "motion": "14.0.0",
     "next": "16.4.6",
     "react": "19.3.0",

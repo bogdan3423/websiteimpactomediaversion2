@@ -17,6 +17,8 @@ import { SplitWords } from "@/components/motion/SplitWords";
 import { clients } from "@/content/clients";
 import { TeamBadge } from "@/components/sections/TeamBadge";
 import { homeFaq } from "@/content/faq";
+import { PostGrid } from "@/components/blog/PostCard";
+import { getAllPosts } from "@/lib/blog/posts";
 import { pageMetadata } from "@/lib/metadata";
 import { graph, organizationSchema, webPageSchema, websiteSchema } from "@/lib/structured-data";
 
@@ -27,6 +29,9 @@ const description =
 export const metadata: Metadata = pageMetadata({ title, description, path: "/" });
 
 export default function HomePage() {
+  // Latest articles: internal links from the strongest page to fresh content.
+  const latest = getAllPosts().slice(0, 3);
+  const faqIndex = latest.length ? "07" : "06";
   return (
     <>
       <JsonLd
@@ -210,13 +215,34 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Blog ------------------------------------------------------------------ */}
+      {latest.length ? (
+        <section className="border-t border-line" aria-labelledby="blog-title">
+          <div className="shell section">
+            <SectionIntro
+              id="blog-title"
+              index="06"
+              label="Blog"
+              title="Idei practice din proiectele noastre."
+              text="Ghiduri despre video, campanii Google, Meta și TikTok Ads și website-uri care aduc clienți."
+            />
+            <div className="mt-[var(--section-tight)]">
+              <PostGrid posts={latest} />
+            </div>
+            <div className="mt-10 flex justify-end">
+              <TextLink href="/blog">Toate articolele</TextLink>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {/* FAQ ------------------------------------------------------------------- */}
       <section className="border-t border-line" aria-labelledby="faq-title">
         <div className="shell section grid-site gap-y-12">
           <div className="col-span-4 md:col-span-8 lg:col-span-4">
             <div className="lg:sticky lg:top-[calc(var(--header-h)+2rem)]">
               <div suppressHydrationWarning data-reveal="fade">
-                <Eyebrow index="06">Întrebări frecvente</Eyebrow>
+                <Eyebrow index={faqIndex}>Întrebări frecvente</Eyebrow>
               </div>
               <h2 id="faq-title" className="type-h2 mt-6" suppressHydrationWarning data-reveal="words">
                 <SplitWords text="Ce ne întreabă clienții des." />
