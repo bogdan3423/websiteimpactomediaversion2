@@ -52,15 +52,8 @@ export function ClientWall() {
             width={client.logo.width}
             height={client.logo.height}
             sizes="(min-width: 1024px) 200px, (min-width: 768px) 22vw, 42vw"
-            className={`client-logo h-auto w-auto object-contain ${sizes[client.shape]} ${client.pale ? "client-logo-pale" : ""}`}
+            className={`client-logo h-auto w-auto object-contain ${sizes[client.shape]}`}
           />
-
-          <span
-            aria-hidden="true"
-            className="type-label client-name absolute inset-x-4 bottom-4 truncate md:inset-x-5 md:bottom-5"
-          >
-            {client.name}
-          </span>
         </li>
       ))}
 

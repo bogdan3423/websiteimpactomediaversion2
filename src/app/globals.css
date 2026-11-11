@@ -1038,9 +1038,9 @@
 
 
 /* ------------------------------------------------------------------------
-   Client wall (homepage): logos on the hairline grid. With hover available the
-   wall is monochrome and calm; a cell lifts to surface white, the logo regains
-   its colours and the name slides in. Touch screens keep the logos in colour.
+   Client wall (homepage): logos in their own colours on the hairline grid.
+   On hover a cell lifts to surface white, the logo grows slightly and a
+   signal square appears in the corner.
    ------------------------------------------------------------------------ */
 .client-cell {
   transition:
@@ -1056,49 +1056,19 @@
 
 .client-logo {
   mix-blend-mode: multiply;
-  transition:
-    filter 500ms var(--ease-out-quint),
-    opacity 500ms var(--ease-out-quint),
-    transform 600ms var(--ease-out-quint);
-}
-
-.client-name {
-  color: var(--color-graphite);
-  opacity: 0;
-  transform: translate3d(0, 0.5rem, 0);
-  transition:
-    opacity 400ms var(--ease-out-quint),
-    transform 500ms var(--ease-out-quint);
+  transition: transform 600ms var(--ease-out-quint);
 }
 
 @media (hover: hover) {
-  .client-logo {
-    filter: grayscale(1);
-    opacity: 0.7;
-  }
-
-  /* Gold / light-grey artwork would vanish in greyscale; give it more density. */
-  .client-logo-pale {
-    filter: grayscale(1) contrast(1.5) brightness(0.65);
-    opacity: 0.85;
-  }
-
   .client-cell:hover {
     background-color: var(--color-surface);
   }
 
   .client-cell:hover .client-logo {
-    filter: none;
-    opacity: 1;
     transform: scale(1.06);
   }
 
   .client-cell:hover .client-dot {
-    transform: none;
-  }
-
-  .client-cell:hover .client-name {
-    opacity: 1;
     transform: none;
   }
 }
